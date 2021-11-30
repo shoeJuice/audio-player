@@ -5,6 +5,8 @@ import {BsArrowRightShort} from 'react-icons/bs'
 import {BsFillPlayFill} from 'react-icons/bs'
 import {BsFillPauseFill} from 'react-icons/bs'
 import sound from '../resources/KayshaBPFQMM.mp3'
+import * as ID3 from 'id3-parser'
+
 const AudioPlayer = () => {
     //state
    const [isPlaying, setIsPlaying] = useState(false);
@@ -57,27 +59,41 @@ const AudioPlayer = () => {
         audioPlayer.current.currentTime = progressBar.current.value;
         changePlayerCurrentTime();
     }
+
+    const backThirty = () => {
+        progressBar.current.value = Number(progressBar.current.value - 30);
+        changeRange();
+      }
+    
+    const forwardThirty = () => {
+        progressBar.current.value = Number(progressBar.current.value) + 30;
+        changeRange();
+    }
+    
     return (
-        <div className={styles.audioPlayer}>
-            <audio ref={audioPlayer} src={sound} type="audio/mpeg"> </audio>
-            <button className={styles.forwardBackward}><BsArrowLeftShort /> 30 </button>
-            <button className={styles.playPause} onClick={togglePlayPause}>
-                {isPlaying ? <BsFillPauseFill /> : <BsFillPlayFill />}
-            </button>
-            <button className={styles.forwardBackward}><BsArrowRightShort /> 30</button>
-        
-
-            {/* current time */}
-            <div className={styles.currentTime}>{calculateTime(currentTime)}</div>
+        <div>
+            Hi I'm Back
+            <div className={styles.audioPlayer}>
+                <audio ref={audioPlayer} src={sound} type="audio/mpeg"> </audio>
+                <button className={styles.forwardBackward} onClick={backThirty}><BsArrowLeftShort /> 30 </button>
+                <button className={styles.playPause} onClick={togglePlayPause}>
+                    {isPlaying ? <BsFillPauseFill /> : <BsFillPlayFill />}
+                </button>
+                <button className={styles.forwardBackward} onClick={forwardThirty}><BsArrowRightShort /> 30</button>
             
-            {/*progress bar*/}
-            <div>
-                <input ref={progressBar} className={styles.progressBar} type="range" defaultValue="0" onChange={changeRange}/>
+
+                {/* current time */}
+                <div className={styles.currentTime}>{calculateTime(currentTime)}</div>
+                
+                {/*progress bar*/}
+                <div>
+                    <input ref={progressBar} className={styles.progressBar} type="range" defaultValue="0" onChange={changeRange}/>
+                </div>
+
+                {/* duration */}
+                <div className={styles.duration}>{calculateTime(duration)}</div>
+
             </div>
-
-            {/* duration */}
-            <div className={styles.duration}>{calculateTime(duration)}</div>
-
         </div>
     )
 }
