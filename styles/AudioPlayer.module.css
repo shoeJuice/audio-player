@@ -1,5 +1,9 @@
 
-
+.imageContainer{
+    display: flex;
+    width: 700px;
+    justify-content: center;
+}
 .audioPlayer{
     --primary: #f40082;
     --primary-active: #db0075;
